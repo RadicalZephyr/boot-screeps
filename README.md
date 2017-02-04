@@ -7,14 +7,19 @@ A Boot task to commit code to a [Screeps] server.
 Typically you need to supply the username and password for
 authentication. The task will upload all `.js` files in the fileset.
 
-Run the `boot-screeps` task:
+Run the `commit` task:
 
-    $ boot boot-screeps -u my-username -p definitely-not-my-password
+``` shell
+$ boot commit -u my-username -p definitely-not-my-password
+
+```
 
 To use this in your project, add `[boot-screeps "0.1.0-SNAPSHOT"]` to your `:dependencies`
 and then require the task:
 
-    (require '[boot-screeps.core :refer [boot-screeps]])
+``` clojure
+(require '[boot-screeps.core :refer [commit]])
+```
 
 ## License
 

@@ -14,7 +14,7 @@
       .getName
       (str/replace ".js" "")))
 
-(deftask boot-screeps
+(deftask commit
   "Commit screeps code to a screeps server."
   [u username USERNAME str "The username to authenticate with."
    p password PASSWORD str "The password to authenticate with."

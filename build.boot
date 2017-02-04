@@ -21,4 +21,4 @@
   []
   (comp (pom) (jar) (install)))
 
-(require '[radicalzephyr.boot-screeps :refer [boot-screeps]])
+(require '[radicalzephyr.boot-screeps :refer [commit]])
