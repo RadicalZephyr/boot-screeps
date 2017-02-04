@@ -1,10 +1,10 @@
 (def project 'radicalzephyr/boot-screeps)
 (def version "0.1.0-SNAPSHOT")
 
-(set-env! :resource-paths #{"resources" "src"}
-          :source-paths   #{"test"}
+(set-env! :resource-paths #{"src"}
           :dependencies   '[[org.clojure/clojure "1.8.0"]
-                            [boot/core "2.7.1" :scope "test"]])
+                            [boot/core "2.7.1" :scope "test"]
+                            [http-kit "2.2.0" :scope ""]])
 
 (task-options!
  pom {:project     project
