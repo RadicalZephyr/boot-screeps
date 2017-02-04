@@ -4,7 +4,8 @@
 (set-env! :resource-paths #{"src"}
           :dependencies   '[[org.clojure/clojure "1.8.0"]
                             [boot/core "2.7.1" :scope "test"]
-                            [http-kit "2.2.0" :scope ""]])
+                            [http-kit "2.2.0" :scope "test"]
+                            [cheshire "5.7.0" :scope "test"]])
 
 (task-options!
  pom {:project     project
