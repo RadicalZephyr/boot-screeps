@@ -4,12 +4,15 @@
     [boot.core :as core :refer [deftask]]
     [boot.util :as util]
     [org.httpkit.client :as http]
-    [cheshire.core :as json])
+    [cheshire.core :as json]
+    [clojure.string :as str])
   (:import
    (java.io File)))
 
 (defn- basename [^File file]
-  (.getName file))
+  (-> file
+      .getName
+      (str/replace ".js" "")))
 
 (deftask boot-screeps
   "Commit screeps code to a screeps server."
@@ -29,12 +32,19 @@
             modules (into {}
                           (map (comp (juxt basename slurp) core/tmp-file)
                                js-files))
-            json-result @(http/post api-url
-                                    {:as :text
-                                     :basic-auth [username password]
-                                     :body (json/generate-string {:branch branch
-                                                                  :modules modules})})
+            body (json/generate-string {:branch branch
+                                        :modules modules})
+            {json-result :body :as response}
+            @(http/post api-url
+                        {:as :text
+                         :headers {"Content-Type" "application/json; charset=utf-8"}
+                         :basic-auth [username password]
+                         :body body})
             result (json/parse-string json-result)]
-        (when-not (:ok result)
-          (throw (ex-info "Failed to send code to server" result))))
+        (when-not (get result "ok")
+          (throw (ex-info "Failed to send code to server"
+                          {:result result
+                           :request-body body
+                           :response-body response})))
+        (util/info "Successfully commited code to branch %s at timestamp %s\n" branch result))
       fs)))
